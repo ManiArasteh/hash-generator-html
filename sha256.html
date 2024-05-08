@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SHA256 Generator</title>
+</head>
+<body>
+    <h1>Hash Generator</h1>
+    <li>    
+        <a href="index.html">More Tools</a>
+        <a href="sha256.html">SHA256</a>
+    </li>
+    <label for="input">Input:</label>
+    <input type="text" id="input" placeholder="Enter text...">
+    <button onclick="generate_hash()">Hash it!</button>
+
+    <p id="output"></p>
+</body>
+<script>
+    function generate_hash() {
+        var input = document.getElementById('input').value;
+        var sha256 = sha256hash(input);
+        document.getElementById("output").innerText = "SHA256: " + sha256;
+    }
+
+    function sha256hash(string) {
+        var hexHash = "";
+        try {
+            var hash = CryptoJS.SHA256(string);
+            hexHash = hash.toString(CryptoJS.enc.Hex);
+        } catch (error) {
+            postMessage("Failed generating SHA256");
+        }
+
+        return hexHash;
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</html>
