@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body input {
+    width: 500px;
+    height: 300px;
+    margin: 10;
+}
+
+body h1 {
+    text-align: center;
+    background-color: blueviolet;
+    color: white;
+}
+
+body button {
+    height: 50px;
+}
+
+body li a {
+    margin-top: 20;
+    background-color: blue;
+    color: white;
+}
