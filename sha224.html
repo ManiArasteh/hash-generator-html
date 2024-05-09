@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>MD5 Generator</title>
+    <title>SHA256 Generator</title>
 </head>
 <body>
     <h1>Hash Generator</h1>
@@ -12,7 +12,6 @@
         <a href="sha256.html">SHA256</a>
         <a href="sha1.html">SHA1</a>
         <a href="md5.html">MD5</a>
-
     </li>
     <label for="input">Input:</label>
     <input type="text" id="input" placeholder="Enter text...">
@@ -23,17 +22,17 @@
 <script>
     function generate_hash() {
         var input = document.getElementById('input').value;
-        var sha256 = md5hash(input);
-        document.getElementById("output").innerText = "MD5: " + sha256;
+        var sha224 = sha224hash(input);
+        document.getElementById("output").innerText = "SHA224: " + sha256;
     }
 
-    function md5hash(string) {
+    function sha224hash(string) {
         var hexHash = "";
         try {
-            var hash = CryptoJS.MD5(string);
+            var hash = CryptoJS.SHA1(string);
             hexHash = hash.toString(CryptoJS.enc.Hex);
         } catch (error) {
-            postMessage("Failed generating SHA256");
+            postMessage("Failed generating SHA224");
         }
 
         return hexHash;

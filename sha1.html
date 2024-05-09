@@ -23,10 +23,10 @@
     function generate_hash() {
         var input = document.getElementById('input').value;
         var sha256 = sha256hash(input);
-        document.getElementById("output").innerText = "SHA256: " + sha256;
+        document.getElementById("output").innerText = "SHA1: " + sha256;
     }
 
-    function sha256hash(string) {
+    function sha1hash(string) {
         var hexHash = "";
         try {
             var hash = CryptoJS.SHA1(string);
