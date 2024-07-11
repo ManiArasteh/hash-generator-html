@@ -10,21 +10,33 @@
     <li>    
         <a href="index.html">More Tools</a>
         <a href="sha256.html">SHA256</a>
+        <a href="sha224.html">SHA224</a>
         <a href="sha1.html">SHA1</a>
         <a href="md5.html">MD5</a>
-
     </li>
-    <label for="input">Input:</label>
-    <input type="text" id="input" placeholder="Enter text...">
-    <button onclick="generate_hash()">Hash it!</button>
-
-    <p id="output"></p>
+    <label for="auto_update_tick">Auto update:</label>
+    <div class="auto_update_or_not">
+        <input type="checkbox" id="auto_update_tick" checked>
+    </div>
+    <div class="text_to_hash">
+        <label for="input">Input:</label>
+        <div class="input_tth">
+            <textarea id="input" placeholder="Input" data-remember="input" data-share="input"></textarea>
+        </div>
+        <button onclick="generate_hash()">Hash it!</button>
+    </div>
+    <textarea id="output" readonly></textarea>
+    <footer>Copyright &copy; Mani Arasteh</footer>
 </body>
 <script>
     function generate_hash() {
         var input = document.getElementById('input').value;
-        var sha256 = md5hash(input);
-        document.getElementById("output").innerText = "MD5: " + sha256;
+        if (input.trim() === "") {
+            document.getElementById("output").innerText = "";
+            return;
+        }
+        var md5 = md5hash(input);
+        document.getElementById("output").innerText = md5;
     }
 
     function md5hash(string) {
@@ -38,6 +50,19 @@
 
         return hexHash;
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const inputElement = document.getElementById("input");
+        const checkboxElement = document.getElementById("auto_update_tick");
+
+        inputElement.addEventListener("input", () => {
+            if (checkboxElement.checked && inputElement.value.trim() !== "") {
+                generate_hash();
+            } else if (inputElement.value.trim() === "") {
+                document.getElementById("output").innerText = "";
+            }
+        });
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </html>

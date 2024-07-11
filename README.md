@@ -1,4 +1,4 @@
 # This is a GitHub repository for hash generator site
 This is a project for generating hash
 ## How to set it up?
-Nothing to do, just open nedasalehi.github.io/hash-generator-html
+Just open [maarasteh.github.io/hash-generator-html](https://maarasteh.github.io/hash-generator-html)

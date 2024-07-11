@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,36 +11,59 @@
     <li>    
         <a href="index.html">More Tools</a>
         <a href="sha256.html">SHA256</a>
-<<<<<<< HEAD
-=======
+        <a href="sha224.html">SHA224</a>
         <a href="sha1.html">SHA1</a>
         <a href="md5.html">MD5</a>
->>>>>>> 8a8ef23a5872e3fd2f7b0401be660a967725d298
     </li>
-    <label for="input">Input:</label>
-    <input type="text" id="input" placeholder="Enter text...">
-    <button onclick="generate_hash()">Hash it!</button>
+    <label for="auto_update_tick">Auto update:</label>
+    <div class="auto_update_or_not">
+        <input type="checkbox" id="auto_update_tick" checked>
+    </div>
+    <div class="text_to_hash">
+        <label for="input">Input:</label>
+        <div class="input_tth">
+            <textarea id="input" placeholder="Input" data-remember="input" data-share="input"></textarea>
+        </div>
+        <button onclick="generate_hash()">Hash it!</button>
+    </div>
+    <textarea id="output" readonly></textarea>
+    <footer>Copyright &copy; Mani Arasteh</footer>
 
-    <p id="output"></p>
-</body>
-<script>
-    function generate_hash() {
-        var input = document.getElementById('input').value;
-        var sha256 = sha256hash(input);
-        document.getElementById("output").innerText = "SHA256: " + sha256;
-    }
-
-    function sha256hash(string) {
-        var hexHash = "";
-        try {
-            var hash = CryptoJS.SHA256(string);
-            hexHash = hash.toString(CryptoJS.enc.Hex);
-        } catch (error) {
-            postMessage("Failed generating SHA256");
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        function generate_hash() {
+            var input = document.getElementById('input').value;
+            if (input.trim() === "") {
+                document.getElementById("output").innerText = "";
+                return;
+            }
+            var sha256 = sha256hash(input);
+            document.getElementById("output").innerText = sha256;
         }
 
-        return hexHash;
-    }
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+        function sha256hash(string) {
+            var hexHash = "";
+            try {
+                var hash = CryptoJS.SHA256(string);
+                hexHash = hash.toString(CryptoJS.enc.Hex);
+            } catch (error) {
+                postMessage("Failed generating SHA256");
+            }
+            return hexHash;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputElement = document.getElementById("input");
+            const checkboxElement = document.getElementById("auto_update_tick");
+
+            inputElement.addEventListener("input", () => {
+                if (checkboxElement.checked && inputElement.value.trim() !== "") {
+                    generate_hash();
+                } else if (inputElement.value.trim() === "") {
+                    document.getElementById("output").innerText = "";
+                }
+            });
+        });
+    </script>
+</body>
 </html>

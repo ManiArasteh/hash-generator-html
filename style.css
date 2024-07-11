@@ -2,11 +2,11 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body input {
-    width: 500px;
-    height: 300px;
-    margin: 10;
+textarea {
+    width: 100%;
+    height: 115px;
 }
+
 
 body h1 {
     text-align: center;
@@ -23,3 +23,13 @@ body li a {
     background-color: blue;
     color: white;
 }
+
+li {
+    align-items: center;
+}
+
+footer {
+    text-align: center;
+}
+
+
