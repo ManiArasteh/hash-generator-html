@@ -93,10 +93,10 @@
     function create_share_link() {
         if (document.getElementById("username_or_not").checked) {
             if (document.getElementById("username").value != "") {
-                document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&username=" + document.getElementById("username").value + "&hash=sha256");
+                document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&username=" + document.getElementById("username").value + "&hash=md5");
             }
         } else {
-            document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&hash=sha256");
+            document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&hash=md5");
         }
     }
 </script>
