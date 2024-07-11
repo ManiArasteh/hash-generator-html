@@ -27,6 +27,12 @@
         <button onclick="generate_hash()">Hash it!</button>
     </div>
     <textarea id="output" readonly></textarea>
+    <label for="username_or_not">Use username: </label>
+    <input type="checkbox" id="username_or_not">
+    <input type="text" id="username" placeholder="Enter a username" disabled>
+    <div class="link">
+        <input type="text" id="sharelink" placeholder="Share Link">
+    </div>
     <footer>Copyright &copy; Mani Arasteh</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -39,6 +45,7 @@
             }
             var sha256 = sha256hash(input);
             document.getElementById("output").innerText = sha256;
+            create_share_link();
         }
 
         function sha256hash(string) {
@@ -49,21 +56,51 @@
             } catch (error) {
                 postMessage("Failed generating SHA256");
             }
+            create_share_link();
             return hexHash;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             const inputElement = document.getElementById("input");
             const checkboxElement = document.getElementById("auto_update_tick");
+            const usernameElement = document.getElementById("username");
+            const checkBoxElement2 = document.getElementById("username_or_not");
 
             inputElement.addEventListener("input", () => {
                 if (checkboxElement.checked && inputElement.value.trim() !== "") {
                     generate_hash();
                 } else if (inputElement.value.trim() === "") {
                     document.getElementById("output").innerText = "";
+                    document.getElementById("sharelink").value = "";
+                }
+            });
+
+            checkBoxElement2.addEventListener("change", function() {
+                if (checkBoxElement2.checked) {
+                    usernameElement.disabled = false;
+                    create_share_link();
+                } else {
+                    usernameElement.disabled = true;
+                    create_share_link();
+                }
+            });
+
+            usernameElement.addEventListener("input", () => {
+                if (checkBoxElement2.checked) {
+                    create_share_link();
                 }
             });
         });
+
+        function create_share_link() {
+            if (document.getElementById("username_or_not").checked) {
+                if (document.getElementById("username").value != "") {
+                    document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&username=" + document.getElementById("username").value + "&hash=sha256");
+                }
+            } else {
+                document.getElementById("sharelink").value = ("https://maarasteh.github.io/share.html?input=" + document.getElementById("input").value + "&hash=sha256");
+            }
+        }
     </script>
 </body>
 </html>

@@ -7,6 +7,9 @@ textarea {
     height: 115px;
 }
 
+.link input {
+    width: 1000px;
+}
 
 body h1 {
     text-align: center;

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Hash Generator Share</title>
+</head>
+<body>
+    <h1>Hash Generator</h1>
+    <p id="para">Someone shared you a hash. This is the hash. </p>
+    <textarea id="text_to_hash" readonly></textarea>
+    <textarea id="hash" readonly></textarea>
+    <p>You can generate hash, too. If you want, <a href="index.html">Go here</a>!</p>
+    <footer>Copyright &copy; Mani Arasteh</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        // Function to get query parameters from the URL
+        function getQueryParams() {
+            let params = {};
+            let queryString = window.location.search.substring(1);
+            let pairs = queryString.split("&");
+            for (let pair of pairs) {
+                let [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+            }
+            return params;
+        }
+
+        // Function to generate hash based on input and query parameter
+        function generate_hash(string) {
+            let params = getQueryParams();
+            let type = params["hash"] || "";
+            if (type === "sha256") {
+                try {
+                    var hash = CryptoJS.SHA256(string);
+                    return hash.toString(CryptoJS.enc.Hex);
+                } catch (error) {
+                    console.error("Failed generating SHA256", error);
+                    return "";
+                }
+            } else if (type === "md5") {
+                try {
+                    var hash = CryptoJS.MD5(string);
+                    return hash.toString(CryptoJS.enc.Hex);
+                } catch (error) {
+                    console.error("Failed generating MD5", error);
+                    return "";
+                }
+            } else if (type === "sha1") {
+                try {
+                    var hash = CryptoJS.SHA1(string);
+                    return hash.toString(CryptoJS.enc.Hex);
+                } catch (error) {
+                    console.error("Failed generating SHA1", error);
+                    return "";
+                }
+            } else if (type === "sha224") {
+                try {
+                    var hash = CryptoJS.SHA224(string);
+                    return hash.toString(CryptoJS.enc.Hex);
+                } catch (error) {
+                    console.error("Failed generating SHA224", error);
+                    return "";
+                }
+            } else {
+                console.error("Invalid hash parameter");
+                return "";
+            }
+        }
+
+        // Execute when the page loads
+        window.onload = function() {
+            let params = getQueryParams();
+            let input = params["input"] || "";
+            document.getElementById("text_to_hash").value = input;
+            let username = params["username"] || "";
+            if (username) {
+                document.getElementById("para").innerText = (username + " shared you a hash. This is the hash. ")
+            }
+            let hash = generate_hash(input);
+            document.getElementById("hash").innerText = hash;
+        }
+    </script>
+</body>
+</html>
